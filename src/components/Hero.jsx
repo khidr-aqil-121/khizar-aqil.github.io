@@ -12,12 +12,11 @@ export function Hero() {
         <div className="flex flex-col items-center">
           <div className="max-w-2xl" style={{ verticalAlign: 'middle' }}>
             <h1
-              className="heading-luxe text-5xl sm:text-6xl lg:text-7xl mb-4 text-center"
+              className="heading-luxe text-6xl sm:text-7xl mb-4 text-center"
               style={{
                 letterSpacing: '1px',
                 fontFamily: '"Times New Roman", serif',
                 fontWeight: 900,
-                fontSize: '60px',
                 color: 'rgba(74, 85, 101, 1)',
                 backgroundColor: 'unset',
                 background: 'unset',

@@ -1993,6 +1993,156 @@ body {
   overflow-x: hidden;
 }
 
+/* Mobile: prevent zoom and improve touch behavior */
+@supports (touch-action: manipulation) {
+  html {
+    touch-action: manipulation;
+    -ms-touch-action: manipulation;
+  }
+}
+
+@media (pointer: coarse) {
+  html {
+    touch-action: manipulation;
+  }
+  body {
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Safe area for notched devices */
+@supports (padding: env(safe-area-inset-top)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  header {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Responsive: sections and containers */
+@media (max-width: 639px) {
+  .section-shell {
+    padding: 4rem 0;
+    scroll-margin-top: 4rem;
+  }
+  .section-inner {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    gap: 1.5rem;
+  }
+  html {
+    scroll-padding-top: 4rem;
+  }
+  .heading-luxe {
+    font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
+  }
+  .about-card-mobile,
+  .skills-card-mobile {
+    min-height: 200px;
+  }
+}
+
+/* Project cards: full width on small screens, horizontal scroll on medium */
+@media (max-width: 639px) {
+  .article-wrapper {
+    width: 100%;
+    min-width: 280px;
+    max-width: 100%;
+    height: auto;
+    min-height: 420px;
+  }
+  .projects-section-body {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .projects-section-body::-webkit-scrollbar {
+    display: none;
+  }
+  .projects-section-body .article-wrapper {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    flex: 0 0 min(85vw, 320px);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .article-wrapper {
+    width: 320px;
+    min-width: 280px;
+    max-width: 360px;
+    height: 480px;
+  }
+  .projects-section-body {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+  }
+  .projects-section-body .article-wrapper {
+    scroll-snap-align: start;
+    flex: 0 0 320px;
+  }
+}
+
+/* About & Skills cards: stack on mobile */
+@media (max-width: 639px) {
+  #about .section-body,
+  #skills .section-body {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  #about .section-body .magic-card,
+  #skills .section-body .magic-card,
+  #about .section-body [class*="MagicBento"],
+  #skills .section-body [class*="MagicBento"] {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  #about .section-body,
+  #skills .section-body {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
+
+/* Contact form and contact section: full width on mobile */
+@media (max-width: 639px) {
+  .contact-form,
+  .contact-form > input,
+  .contact-form .oauthButton,
+  .contact-textarea {
+    width: 100% !important;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .contact-form {
+    padding: 1rem;
+  }
+  #contact .section-body .max-w-3xl {
+    max-width: 100%;
+  }
+  #contact .section-body [class*="w-fit"] {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 @property --tw-space-y-reverse {
   syntax: "*";
   inherits: false;

@@ -83,9 +83,10 @@ export function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-gray-900"
+            className="md:hidden text-gray-900 min-h-[44px] min-w-[44px] inline-flex items-center justify-center -mr-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
+            type="button"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>

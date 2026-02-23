@@ -30,14 +30,13 @@ export function About() {
   }));
 
   return (
-    <section id="about" className="section-shell h-[834px] items-center bg-[#F8F0E3] text-gray-900">
+    <section id="about" className="section-shell min-h-0 items-center bg-[#F8F0E3] text-gray-900">
       <div className="section-inner w-full max-w-7xl flex flex-col items-center gap-8 mx-auto">
         <div className="section-head text-center w-full">
           <h2
             className="heading-luxe text-5xl sm:text-6xl mb-4"
             style={{
               fontFamily: '"Times New Roman", serif',
-              fontSize: '60px',
               fontWeight: 900,
               letterSpacing: '1px',
               color: 'rgba(74, 85, 101, 1)',
@@ -57,8 +56,8 @@ export function About() {
           {aboutCards.map((card, index) => (
             <MagicBentoCard
               key={index}
-              className="bg-white p-8 card-rounded about-card-shadow transition-transform duration-200 ease-in-out hover:-translate-y-[6px] w-[336px] h-[236px] min-w-[336px] shrink-0 overflow-hidden text-left align-middle"
-              style={{ width: 336, height: 236, minWidth: 336 }}
+              className="about-card-mobile bg-white p-6 sm:p-8 card-rounded about-card-shadow transition-transform duration-200 ease-in-out hover:-translate-y-[6px] w-full max-w-[336px] min-w-0 sm:min-w-[280px] sm:w-[336px] sm:h-[236px] shrink-0 overflow-hidden text-left align-middle"
+              style={{ minHeight: 236 }}
               enableTilt={false}
               enableMagnetism={false}
               clickEffect={false}

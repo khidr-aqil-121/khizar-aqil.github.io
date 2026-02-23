@@ -59,7 +59,6 @@ export function Projects() {
           <h2
             className="heading-luxe text-5xl sm:text-6xl mb-4"
             style={{
-              fontSize: '60px',
               color: 'rgba(74, 85, 101, 1)',
               fontWeight: 900,
               fontFamily: '"Times New Roman", serif',

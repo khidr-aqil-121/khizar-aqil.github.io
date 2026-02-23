@@ -44,7 +44,6 @@ export function Skills() {
           <h2
             className="heading-luxe text-5xl sm:text-6xl mb-4"
             style={{
-              fontSize: '60px',
               fontFamily: '"Times New Roman", serif',
               fontWeight: 900,
               letterSpacing: '1px',
@@ -67,8 +66,8 @@ export function Skills() {
             return (
               <MagicBentoCard
                 key={index}
-                className="bg-white p-8 card-rounded text-left align-middle w-[279px] h-[280px] min-w-[279px] shrink-0 grid shadow-[inset_0px_4px_12px_0px_rgba(0,0,0,0.15)] transition-transform duration-200 ease-in-out hover:-translate-y-[6px] hover:shadow-[0_28px_60px_rgba(15,23,42,0.22)] overflow-hidden"
-                style={{ width: 279, height: 280, minWidth: 279 }}
+                className="skills-card-mobile bg-white p-6 sm:p-8 card-rounded text-left align-middle w-full max-w-[279px] min-w-0 sm:min-w-[279px] sm:w-[279px] sm:h-[280px] shrink-0 grid shadow-[inset_0px_4px_12px_0px_rgba(0,0,0,0.15)] transition-transform duration-200 ease-in-out hover:-translate-y-[6px] hover:shadow-[0_28px_60px_rgba(15,23,42,0.22)] overflow-hidden"
+                style={{ minHeight: 280 }}
                 enableTilt={false}
                 enableMagnetism={false}
                 clickEffect
