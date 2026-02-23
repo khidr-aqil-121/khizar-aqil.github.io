@@ -876,8 +876,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 6rem 0;
-  scroll-margin-top: 6rem;
+  padding: var(--section-padding-y, 6rem) 0;
+  scroll-margin-top: var(--scroll-margin-top, 6rem);
   width: 100%;
 }
 
@@ -890,12 +890,12 @@
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 var(--section-padding-x, 1rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2.5rem;
+  gap: var(--section-gap, 2.5rem);
 }
 
 .section-head {
@@ -1933,6 +1933,69 @@
   --sidebar-accent-foreground: oklch(.205 0 0);
   --sidebar-border: oklch(.922 0 0);
   --sidebar-ring: oklch(.708 0 0);
+
+  /* Breakpoints (use in media queries - CSS cannot use vars in query values)
+   * Phone:  0–767px     (max-width: 767px)
+   * Tablet: 768–1023px  (min-width: 768px) and (max-width: 1023px)
+   * Desktop: 1024px+    (min-width: 1024px)
+   */
+
+  /* Layout defaults (desktop) – override per device in media queries below */
+  --section-padding-y: 6rem;
+  --section-padding-x: 2rem;
+  --section-gap: 2.5rem;
+  --scroll-margin-top: 6rem;
+}
+
+/* Tablet: 768px–1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --section-padding-y: 5rem;
+    --section-padding-x: 1.5rem;
+    --section-gap: 2rem;
+    --scroll-margin-top: 5rem;
+  }
+}
+
+/* Phone: 0–767px */
+@media (max-width: 767px) {
+  :root {
+    --section-padding-y: 4rem;
+    --section-padding-x: 1rem;
+    --section-gap: 1.5rem;
+    --scroll-margin-top: 4rem;
+  }
+}
+
+/* Show / hide by device – use in JSX for different content per screen size.
+   Example: <p className="show-phone">Only on phone</p>
+            <p className="show-tablet">Only on tablet</p>
+            <p className="show-desktop">Only on desktop</p>
+            <p className="hide-phone">Hidden on phone only</p>
+   Add .inline or .flex if the element should be inline/flex when shown. */
+.show-phone { display: none !important; }
+.show-tablet { display: none !important; }
+.show-desktop { display: none !important; }
+
+@media (max-width: 767px) {
+  .show-phone { display: block !important; }
+  .show-phone.inline { display: inline !important; }
+  .show-phone.flex { display: flex !important; }
+  .hide-phone { display: none !important; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .show-tablet { display: block !important; }
+  .show-tablet.inline { display: inline !important; }
+  .show-tablet.flex { display: flex !important; }
+  .hide-tablet { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .show-desktop { display: block !important; }
+  .show-desktop.inline { display: inline !important; }
+  .show-desktop.flex { display: flex !important; }
+  .hide-desktop { display: none !important; }
 }
 
 .dark {
@@ -1993,6 +2056,199 @@ body {
   overflow-x: hidden;
 }
 
+/* DarkVeil: fixed full-viewport background, content scrolls over it */
+.dark-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transform: scale(var(--veil-scale, 1));
+  transform-origin: center center;
+}
+.dark-veil__gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      110deg,
+      #0a0a0f 0%,
+      #0f0d18 15%,
+      #141022 30%,
+      #0c0a14 45%,
+      #0e0c1a 60%,
+      #0a0a0f 75%,
+      #08080c 100%
+    );
+  background-size: 400% 300%;
+  background-position: 0% 0%;
+  animation: dark-veil-shift calc(20s / var(--veil-speed, 0.5)) ease-in-out infinite;
+}
+.dark-veil__glow {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(40, 30, 60, 0.35) 0%,
+    rgba(20, 15, 35, 0.15) 40%,
+    transparent 70%
+  );
+  animation: dark-veil-glow calc(15s / var(--veil-speed, 0.5)) ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes dark-veil-glow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(5%, -8%) scale(1.05); }
+  66% { transform: translate(-6%, 4%) scale(0.98); }
+}
+.dark-veil__noise {
+  position: absolute;
+  inset: 0;
+  opacity: calc(var(--veil-noise, 0) * 0.15);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark-veil__scanlines {
+  position: absolute;
+  inset: 0;
+  opacity: calc(var(--veil-scanline, 0) * 0.2);
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 2px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+}
+@keyframes dark-veil-shift {
+  0%, 100% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+}
+
+/* When DarkVeil is used: content layer sits above background */
+.app-with-veil {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  background: transparent;
+}
+
+/* Dark-veil page theme: light text, dark glass sections */
+.app-with-veil .section-shell,
+.app-with-veil .section-inner,
+.app-with-veil #home,
+.app-with-veil #about,
+.app-with-veil #skills,
+.app-with-veil #projects,
+.app-with-veil #contact {
+  background: transparent !important;
+}
+.app-with-veil .heading-luxe,
+.app-with-veil .section-head h2,
+.app-with-veil .section-head p,
+.app-with-veil h1, .app-with-veil h2, .app-with-veil h3 {
+  color: #e5e7eb !important;
+}
+.app-with-veil .text-gray-700,
+.app-with-veil .text-gray-600,
+.app-with-veil p {
+  color: #d1d5db !important;
+}
+.app-with-veil footer,
+.app-with-veil footer p {
+  background: transparent !important;
+  color: #9ca3af !important;
+}
+.app-with-veil header {
+  background: rgba(10, 10, 15, 0.45) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.app-with-veil header a,
+.app-with-veil .header-brand {
+  color: #f3f4f6 !important;
+}
+.app-with-veil .nav-hover:hover {
+  color: #ff6a26 !important;
+}
+.app-with-veil .animated-button {
+  color: #111827;
+  background: #f3f4f6;
+}
+.app-with-veil .animated-button:hover {
+  color: #fff;
+}
+.app-with-veil .animated-button .circle {
+  background-color: rgba(243, 244, 246, 0.95);
+}
+.app-with-veil header button {
+  color: #f3f4f6;
+}
+.app-with-veil .project-type,
+.app-with-veil .impact-pill {
+  background: rgba(255, 106, 38, 0.2);
+  color: #ff9e73;
+  border-color: rgba(255, 106, 38, 0.4);
+}
+.app-with-veil .project-hover {
+  background: rgba(255, 106, 38, 0.15);
+  color: #ff6a26;
+}
+.app-with-veil .contact-form > p > span {
+  color: #9ca3af;
+}
+.app-with-veil .contact-form .separator > div {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.app-with-veil .magic-card,
+.app-with-veil .card-rounded,
+.app-with-veil .skill-card,
+.app-with-veil .article-wrapper {
+  background: rgba(18, 18, 26, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+}
+.app-with-veil .skill-title,
+.app-with-veil .project-title,
+.app-with-veil .project-desc,
+.app-with-veil h3.text-\[\#111827\] {
+  color: #e5e7eb !important;
+}
+.app-with-veil .skill-list li,
+.app-with-veil .text-\[\#4B5563\] {
+  color: #9ca3af !important;
+}
+.app-with-veil .contact-form,
+.app-with-veil .contact-form > p,
+.app-with-veil .contact-form .separator > span {
+  background: rgba(18, 18, 26, 0.5);
+  border-color: rgba(255, 106, 38, 0.5);
+  color: #e5e7eb;
+}
+.app-with-veil .contact-form > input,
+.app-with-veil .contact-textarea,
+.app-with-veil .contact-form .oauthButton {
+  background: rgba(30, 30, 40, 0.5);
+  border-color: rgba(255, 106, 38, 0.4);
+  color: #f3f4f6;
+}
+.app-with-veil .nitro-outline::before {
+  background: linear-gradient(163deg, #ff6a26 0%, #ff9e73 100%);
+}
+.app-with-veil #contact .card-rounded.bg-white,
+.app-with-veil #contact [class*="bg-white"].card-rounded {
+  background: rgba(18, 18, 26, 0.5) !important;
+}
+.app-with-veil #contact .text-\[\#111827\] {
+  color: #e5e7eb !important;
+}
+
 /* Mobile: prevent zoom and improve touch behavior */
 @supports (touch-action: manipulation) {
   html {
@@ -2022,20 +2278,15 @@ body {
   }
 }
 
-/* Responsive: sections and containers */
-@media (max-width: 639px) {
-  .section-shell {
-    padding: 4rem 0;
-    scroll-margin-top: 4rem;
-  }
-  .section-inner {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    gap: 1.5rem;
-  }
+/* Responsive: sections use --section-* variables (phone/tablet/desktop) */
+/* Extra tweaks for small phones (below 768px) */
+@media (max-width: 767px) {
   html {
-    scroll-padding-top: 4rem;
+    scroll-padding-top: var(--scroll-margin-top, 4rem);
   }
+}
+
+@media (max-width: 639px) {
   .heading-luxe {
     font-size: clamp(1.75rem, 8vw, 2.5rem) !important;
   }
