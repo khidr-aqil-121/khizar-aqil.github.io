@@ -3,7 +3,7 @@ import { About } from './components/About';
 import { Skills } from './components/Skills';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
-import { Header } from './components/Header';
+import { SiteNav } from './components/SiteNav';
 import { DarkVeil } from './components/DarkVeil';
 import GradualBlur from './components/GradualBlur';
 
@@ -28,14 +28,17 @@ export default function App() {
         curve="bezier"
         exponential
         opacity={1}
+        zIndex={100}
       />
-      <div className="app-with-veil">
-        <Header />
-        <Hero />
+      <SiteNav />
+      <div className="app-with-veil relative">
+        <div className="pt-[5rem] md:pt-[6rem]">
+          <Hero />
         <About />
         <Skills />
         <Projects />
         <Contact />
+        </div>
         <footer className="py-8 w-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center w-full">
             <p>&copy; {new Date().getFullYear()} Khizar Aqil's Portfolio. All rights reserved.</p>

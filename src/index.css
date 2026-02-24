@@ -2128,6 +2128,39 @@ body {
   75% { background-position: 0% 100%; }
 }
 
+/* Site nav: fixed header portaled to body, always on top */
+.site-nav {
+  position: fixed !important;
+  z-index: 99999 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+.site-nav a,
+.site-nav button {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Phone: hide top bar entirely (mobile uses fixed circle menu only) */
+@media (max-width: 767px) {
+  .site-nav {
+    display: none !important;
+  }
+}
+
+/* CardNav: fixed bar portaled to body, always on top */
+.card-nav-container {
+  position: fixed !important;
+  z-index: 9999 !important;
+  pointer-events: auto !important;
+}
+.card-nav-container .card-nav,
+.card-nav-container a,
+.card-nav-container [role="button"] {
+  pointer-events: auto !important;
+}
+
 /* When DarkVeil is used: content layer sits above background */
 .app-with-veil {
   position: relative;
@@ -2178,14 +2211,27 @@ body {
   color: #ff6a26 !important;
 }
 .app-with-veil .animated-button {
-  color: #111827;
-  background: #f3f4f6;
+  color: #e5e7eb;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+.app-with-veil .animated-button svg {
+  fill: #e5e7eb;
 }
 .app-with-veil .animated-button:hover {
   color: #fff;
+  background: rgba(255, 106, 38, 0.25);
+  border-color: rgba(255, 106, 38, 0.5);
+}
+.app-with-veil .animated-button:hover svg {
+  fill: #fff;
 }
 .app-with-veil .animated-button .circle {
-  background-color: rgba(243, 244, 246, 0.95);
+  background-color: rgba(255, 106, 38, 0.4);
+}
+.app-with-veil .animated-button:hover .circle {
+  background-color: rgba(255, 106, 38, 0.6);
 }
 .app-with-veil header button {
   color: #f3f4f6;
